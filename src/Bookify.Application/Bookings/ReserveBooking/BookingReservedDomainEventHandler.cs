@@ -6,13 +6,13 @@ using MediatR;
 
 namespace Bookify.Application.Bookings.ReserveBooking;
 
-internal sealed class BookingReserveDomainEventHandler : INotificationHandler<BookingReservedDomainEvent>
+internal sealed class BookingReservedDomainEventHandler : INotificationHandler<BookingReservedDomainEvent>
 {
     private readonly IBookingRepository _bookingRepository;
     private readonly IUserRepository _userRepository;
     private readonly IEmailService _emailService;
 
-    public BookingReserveDomainEventHandler(
+    public BookingReservedDomainEventHandler(
         IBookingRepository bookingRepository,
         IUserRepository userRepository,
         IEmailService emailService)
