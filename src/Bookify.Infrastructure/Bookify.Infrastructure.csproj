@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bookify.Application\Bookify.Application.csproj" />
     <ProjectReference Include="..\src\Bookify.Application\Bookify.Application.csproj" />
   </ItemGroup>
 
