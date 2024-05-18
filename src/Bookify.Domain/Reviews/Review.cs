@@ -4,7 +4,7 @@ using Bookify.Domain.Reviews.Events;
 
 namespace Bookify.Domain.Reviews;
 
-internal sealed class Review : Entity
+public sealed class Review : Entity
 {
     public Review(
         Guid id,
@@ -24,7 +24,7 @@ internal sealed class Review : Entity
         CreatedOnUtc = createdOnUtc;
     }
 
-    public Review()
+    public Review(Guid id) : base(id)
     {
     }
 
@@ -46,7 +46,7 @@ internal sealed class Review : Entity
         Comment comment,
         DateTime createOnUtc)
     {
-        if(booking.Status != BookingStatus.Completed)
+        if (booking.Status != BookingStatus.Completed)
         {
             return Result.Failure<Review>(ReviewErrors.NotEligible);
         }

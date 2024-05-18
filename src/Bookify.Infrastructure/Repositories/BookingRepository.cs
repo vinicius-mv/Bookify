@@ -13,12 +13,12 @@ internal sealed class BookingRepository : Repository<Booking>, IBookingRepositor
         BookingStatus.Completed
     };
 
-    public BookingRepository(ApplicationDbContext dbContext) 
+    public BookingRepository(ApplicationDbContext dbContext)
         : base(dbContext)
     {
     }
 
-    public async Task<bool> IsOverlapping(
+    public async Task<bool> IsOverlappingAsync(
         Apartment apartment,
         DateRange duration,
         CancellationToken cancellationToken = default)
