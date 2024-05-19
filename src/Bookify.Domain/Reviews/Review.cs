@@ -24,7 +24,7 @@ public sealed class Review : Entity
         CreatedOnUtc = createdOnUtc;
     }
 
-    public Review(Guid id) : base(id)
+    private Review()
     {
     }
 

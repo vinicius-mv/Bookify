@@ -23,7 +23,9 @@ public sealed class Apartment : Entity
         Amenities = amenities;
     }
 
-
+    private Apartment()
+    {
+    }
 
     public Name Name { get; private set; }
 
