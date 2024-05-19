@@ -13,5 +13,5 @@ RUN dotnet build "Bookify.Api.csproj" -c Release -o /app/publish /p:UseAppHost=f
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Bookify.Api.dll"]
