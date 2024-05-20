@@ -1,7 +1,7 @@
-﻿using Bookify.Application.Abstractions.Data;
+﻿using System.Data;
+using Bookify.Application.Abstractions.Data;
 using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Abstractions;
-using Bookify.Domain.Apartments;
 using Bookify.Domain.Bookings;
 using Dapper;
 
@@ -14,7 +14,7 @@ internal sealed class SearchApartmentsQueryHandler
     {
         (int)BookingStatus.Reserved,
         (int)BookingStatus.Confirmed,
-        (int)BookingStatus.Completed,
+        (int)BookingStatus.Completed
     };
 
     private readonly ISqlConnectionFactory _sqlConnectionFactory;
@@ -31,10 +31,10 @@ internal sealed class SearchApartmentsQueryHandler
             return new List<ApartmentResponse>();
         }
 
-        using var connection = _sqlConnectionFactory.CreateConnection();
+        using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
 
         const string sql = """
-            SELECT 
+            SELECT
                 a.id AS Id,
                 a.name AS Name,
                 a.description AS Description,
@@ -44,13 +44,13 @@ internal sealed class SearchApartmentsQueryHandler
                 a.address_state AS State,
                 a.address_zip_code AS ZipCode,
                 a.address_city AS City,
-                a.address_street AS Street,
+                a.address_street AS Street
             FROM apartments AS a
-            WHERE NOT EXISTS 
+            WHERE NOT EXISTS
             (
                 SELECT 1
                 FROM bookings AS b
-                WHERE 
+                WHERE
                     b.apartment_id = a.id AND
                     b.duration_start <= @EndDate AND
                     b.duration_end >= @StartDate AND
@@ -58,7 +58,7 @@ internal sealed class SearchApartmentsQueryHandler
             )
             """;
 
-        var apartments = await connection
+        IEnumerable<ApartmentResponse> apartments = await connection
             .QueryAsync<ApartmentResponse, AddressResponse, ApartmentResponse>(
                 sql,
                 (apartment, address) =>
